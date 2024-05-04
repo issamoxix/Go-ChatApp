@@ -26,6 +26,10 @@ func (c *Client) Read() {
 		c.Conn.Close()
 	}()
 	for {
+		if _, ok := c.Pool.Clients[c]; !ok {
+			break
+		}
+
 		messageType, p, err := c.Conn.ReadMessage()
 		if err != nil {
 			fmt.Println(err)
